@@ -1,0 +1,28 @@
+import socket #Usada para se comunicar com a placa de redee com o S.O
+
+ip = input("Digite o host ou ip a ser verificado: ")
+
+
+ports = []
+count = 0
+while count < 10:
+    ports.append(int(input("Digite a porta a ser verificada: ")))
+    count +=1
+
+for port in ports:
+    # metodo de conexao será o socket - IPV4 = AF_INET e SOCK_STREAM = tipo de conexão TCP/IP
+    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    client.settimeout(0.05)  # a requisição será feita pelo tempo especificado
+    #definimos onde ele irá se conectar
+    code = client.connect_ex((ip, port))
+
+#Verificando a saída da requisição
+#print(code) # 0 = Success
+
+    if code == 0:
+        print(str(port), " -- Porta aberta!")
+    else:
+        print(str(port), " -- Porta fechada!")
+
+print("________________")
+print("Scan finalizado!")
